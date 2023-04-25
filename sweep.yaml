@@ -1,0 +1,53 @@
+program: training.py
+method: bayes
+
+metric:
+  name: best_val_average_precision
+  goal: maximize
+parameters:
+  mixup:
+    values:
+      - 'no'
+      - 'input'
+      - 'manifold'
+  do_flips:
+    values:
+      - yes
+      - no
+  do_elastic_transforms:
+    values:
+      - yes
+      - no
+  learning_rate:
+    distribution: q_log_uniform_values
+    q: 1e-5
+    min: 1e-5
+    max: 0.02
+  max_epochs:
+    min: 50
+    max: 250
+  batch_size:
+    values:
+      - 4
+      - 8
+      - 16
+  backbone:
+    values: 
+      - efficientnet-b0
+      - efficientnet-b1
+      - efficientnet-b2
+      - efficientnet-b3
+      - efficientnet-b4
+  aug_prob:
+    distribution: q_log_uniform_values
+    q: 1e-1
+    min: 0.1
+    max: 0.8
+  gpu: 
+    values:
+      - 1
+early_terminate:
+  type: hyberband
+  min_iter: 7
+project: Trains_final
+
